@@ -1,6 +1,7 @@
 package dbui;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -20,5 +21,9 @@ public class Controller {
             statusLabel.setText("❌ Connection failed.");
             e.printStackTrace();
         }
+    }
+
+    private String getSection(ComboBox section) {
+        return section.getValue().toString();
     }
 }

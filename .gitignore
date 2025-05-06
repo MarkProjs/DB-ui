@@ -1,0 +1,43 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Compiled files
+*.class
+
+# Build directories
+/out/
+target/
+bin/
+build/
+
+# Log files
+*.log
+
+# JAR/WAR/EAR packages
+*.jar
+*.war
+*.ear
+
+# Gradle
+.gradle/
+!gradle-wrapper.jar
+build/
+
+# Maven
+/logs/
+*.tmp
+*.bak
+
+# Database files
+*.db
+*.sqlite
+*.mv.db
+*.trace.db
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Environment
+.env

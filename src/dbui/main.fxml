@@ -3,10 +3,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="dbui.Controller" prefWidth="400" prefHeight="200">
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="dbui.Controller" prefWidth="700" prefHeight="300">
     <children>
-        <Label layoutX="120" layoutY="40" text="Connect to SQL Server"/>
-        <Button layoutX="130" layoutY="80" text="Connect" onAction="#connectToDatabase"/>
-        <Label fx:id="statusLabel" layoutX="100" layoutY="130" prefWidth="200"/>
+        <Label fx:id="connectLabel" layoutX="300" layoutY="120" text="Connect to SQL Server" />
+        <Button fx:id="connectBtn" layoutX="330" layoutY="150" text="Connect" onAction="#connectToDatabase"/>
+
+        <!-- Dropdown and Action Buttons (hidden initially until the db connection is successful) -->
+        <ComboBox fx:id="sections" layoutX="200" layoutY="100" prefWidth="300" visible="false" />
+        <Button fx:id="pauseOutbox" layoutX="180" layoutY="150" text="Pause Outbox" onAction="#handlePauseOutbox" visible="false" />
+        <Button fx:id="pauseInbox" layoutX="290" layoutY="150" text="Pause Inbox" onAction="#handlePauseInbox" visible="false" />
+        <Button fx:id="suspend" layoutX="385" layoutY="150" text="Suspend" onAction="#handleSuspend" visible="false" />
+        <Button fx:id="closeApp" layoutX="460" layoutY="150" text="Close App" onAction="#handleCloseApp" visible="false" />
+        <!-- Status label at bottom -->
+        <Label fx:id="statusLabel" layoutX="287" layoutY="250" prefWidth="200" />
     </children>
 </AnchorPane>

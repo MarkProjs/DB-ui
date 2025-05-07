@@ -1,21 +1,22 @@
 package dbui;
 
+import dbui.model.MailConfigDAO;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Controller {
 
-    @FXML
-    private Label statusLabel;
+    @FXML private Label statusLabel;
 
     @FXML
     private void connectToDatabase() {
         String url = "jdbc:sqlserver://MTLSQLDEV013:1433;databaseName=Datacorp;integratedSecurity=true;encrypt=true;trustServerCertificate=true;";
-        try (Connection conn = DriverManager.getConnection(url)) {
+        try  {
+            conn = DriverManager.getConnection(url);
             statusLabel.setText("✅ Connection successful!");
         } catch (SQLException e) {
             statusLabel.setText("❌ Connection failed.");
@@ -23,7 +24,16 @@ public class Controller {
         }
     }
 
-    private String getSection(ComboBox section) {
-        return section.getValue().toString();
+    public void disconnect() {
+        try {
+            if(conn != null && !conn.isClosed()) {
+                conn.close();
+                statusLabel.setText("✅ Disconnected from database.");
+            }
+
+        } catch (SQLException e) {
+            statusLabel.setText("❌ Failed to disconnect.");
+            e.printStackTrace();
+        }
     }
 }

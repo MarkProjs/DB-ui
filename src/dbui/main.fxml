@@ -2,18 +2,21 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="dbui.Controller" prefWidth="700" prefHeight="300">
+<AnchorPane prefHeight="300" prefWidth="700" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dbui.Controller">
     <children>
-        <Label fx:id="connectLabel" layoutX="300" layoutY="120" text="Connect to SQL Server" />
-        <Button fx:id="connectBtn" layoutX="330" layoutY="150" text="Connect" onAction="#connectToDatabase"/>
-
+        <Label fx:id="title" layoutX="192.0" layoutY="14.0" text="Mail Configuration Entry UI">
+             <font>
+                <Font name="System Bold" size="26.0" />
+             </font>
+        </Label>
         <!-- Dropdown and Action Buttons (hidden initially until the db connection is successful) -->
-        <ComboBox fx:id="sections" layoutX="200" layoutY="100" prefWidth="300" visible="false" />
-        <Button fx:id="pauseOutbox" layoutX="180" layoutY="150" text="Pause Outbox" onAction="#handlePauseOutbox" visible="false" />
-        <Button fx:id="pauseInbox" layoutX="290" layoutY="150" text="Pause Inbox" onAction="#handlePauseInbox" visible="false" />
-        <Button fx:id="suspend" layoutX="385" layoutY="150" text="Suspend" onAction="#handleSuspend" visible="false" />
-        <Button fx:id="closeApp" layoutX="460" layoutY="150" text="Close App" onAction="#handleCloseApp" visible="false" />
+        <ComboBox fx:id="sectionComboBox" layoutX="200" layoutY="100" prefWidth="300" visible="false" />
+        <Button fx:id="pauseOutboxBtn" layoutX="180" layoutY="150" onAction="#handlePauseOutbox" text="Pause Outbox" visible="false" />
+        <Button fx:id="pauseInboxBtn" layoutX="290" layoutY="150" onAction="#handlePauseInbox" text="Pause Inbox" visible="false" />
+        <Button fx:id="suspendBtn" layoutX="385" layoutY="150" onAction="#handleSuspend" text="Suspend" visible="false" />
+        <Button fx:id="closeAppBtn" layoutX="460" layoutY="150" onAction="#handleCloseApp" text="Close App" visible="false" />
         <!-- Status label at bottom -->
         <Label fx:id="statusLabel" layoutX="287" layoutY="250" prefWidth="200" />
     </children>

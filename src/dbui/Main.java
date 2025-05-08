@@ -10,7 +10,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));
         primaryStage.setTitle("DB Connector UI");
-        primaryStage.setScene(new Scene(loader.load(), 400, 300));
+        primaryStage.setScene(new Scene(loader.load(), 700, 300));
         primaryStage.show();
     }
 

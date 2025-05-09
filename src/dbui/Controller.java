@@ -45,12 +45,19 @@ public class Controller implements Initializable {
             closeAppBtn.setVisible(true);
 
             sectionComboBox.getItems().addAll("B2B", "FSK", "EDI", "MRP");
+            sectionComboBox.setOnAction(e -> {
+                String selectedSection = sectionComboBox.getValue();
+                if (selectedSection != null) {
+                    updateButtonLabels(selectedSection);
+                }
+            });
+
         }catch (SQLException e) {
             statusLabel.setText("❌ Connection to the database failed.");
         }
     }
 
-    private void handleAction(String keySuffix, String successMessage) {
+    private void handleAction(String keySuffix, String actionName) {
         String section = sectionComboBox.getValue();
         if (section == null) {
             statusLabel.setText("⚠️ Select a section first.");
@@ -59,8 +66,17 @@ public class Controller implements Initializable {
         }
 
         try {
-            boolean success = dao.updateConfigValue(section, keySuffix, "true");
-            statusLabel.setText(success ? successMessage + section : "⚠️ No matching config found.");
+           String currentValue = dao.checkConfigValue(section, keySuffix);
+           String newValue = "true".equalsIgnoreCase(currentValue) ? "false" : "true";
+
+           boolean success = dao.updateConfigValue(section, keySuffix, newValue);
+           if (success) {
+               statusLabel.setText(actionName + "for "+section+ "is now "+newValue.toUpperCase());
+               updateButtonLabels(section);
+           } else {
+               statusLabel.setText("No matching config found.");
+           }
+           statusLabel.setVisible(true);
         }catch (SQLException e) {
             statusLabel.setVisible(true);
             statusLabel.setText("❌ Database update failed.");
@@ -68,14 +84,39 @@ public class Controller implements Initializable {
         }
     }
 
+    private void updateButtonLabels(String section) {
+        try {
+            // Outbox
+            String outboxValue = dao.checkConfigValue(section, "PauseOutbox");
+            boolean isOutboxPaused = "true".equalsIgnoreCase(outboxValue);
+            pauseOutboxBtn.setText(isOutboxPaused ? "Resume Outbox" : "Pause Outbox");
+
+            // Inbox
+            String inboxValue = dao.checkConfigValue(section, "PauseInbox");
+            boolean isInboxPaused = "true".equalsIgnoreCase(inboxValue);
+            pauseInboxBtn.setText(isInboxPaused ? "Resume Inbox" : "Pause Inbox");
+
+            // Suspend
+            String suspendValue = dao.checkConfigValue(section, "Suspend");
+            boolean isSuspended = "true".equalsIgnoreCase(suspendValue);
+            suspendBtn.setText(isSuspended ? "Activate Section" : "Suspend Section");
+
+        } catch (SQLException e) {
+            statusLabel.setText("⚠️ Could not load config states.");
+            statusLabel.setVisible(true);
+            e.printStackTrace();
+        }
+    }
+
+
     public void handlePauseOutbox(){
-        handleAction("PauseOutbox", "✅ Outbox paused for: ");
+        handleAction("PauseOutbox", "Outbox");
     }
     public void handlePauseInbox(){
-        handleAction("PauseInbox", "✅ Inbox paused for: ");
+        handleAction("PauseInbox", "Inbox");
     }
     public void handleSuspend(){
-        handleAction("Suspend", "✅ Suspended section: ");
+        handleAction("Suspend", "Suspend");
     }
     public void handleCloseApp(){
         try {

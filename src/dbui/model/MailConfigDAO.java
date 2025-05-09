@@ -11,6 +11,20 @@ public class MailConfigDAO {
         this.conn = conn;
     }
 
+    public String checkConfigValue(String section, String keySuffix) throws SQLException {
+        String keyName = section + keySuffix;
+        String sql = "SELECT Value FROM dbo.MRPMailConfigEntries WHERE SectionName = ? AND KeyName = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, section);
+            stmt.setString(2, keyName);
+            var rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("Value");
+            }
+        }
+        return null;
+    }
+
     public boolean updateConfigValue(String section, String keySuffix, String newValue) throws SQLException {
         String keyName = section + keySuffix;
         String sql = "UPDATE dbo.MRPMailConfigEntries SET Value = ? WHERE SectionName = ? AND KeyName = ?";

@@ -45,7 +45,7 @@ public class Controller implements Initializable {
             closeAppBtn.setVisible(true);
 
             sectionComboBox.getItems().addAll("B2B", "FSK", "EDI", "MRP");
-            sectionComboBox.setOnAction(e -> {
+            sectionComboBox.setOnAction(_ -> {
                 String selectedSection = sectionComboBox.getValue();
                 if (selectedSection != null) {
                     updateButtonLabels(selectedSection);
@@ -71,7 +71,7 @@ public class Controller implements Initializable {
 
            boolean success = dao.updateConfigValue(section, keySuffix, newValue);
            if (success) {
-               statusLabel.setText(actionName + "for "+section+ "is now "+newValue.toUpperCase());
+               statusLabel.setText(actionName + " for "+section+ " is now "+newValue.toUpperCase());
                updateButtonLabels(section);
            } else {
                statusLabel.setText("No matching config found.");

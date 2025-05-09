@@ -11,11 +11,8 @@ import javafx.scene.control.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
-    @FXML private Label connectLabel;
-    @FXML private Button connectBtn;
     @FXML private ComboBox<String> sectionComboBox;
     @FXML private Button pauseOutboxBtn;
     @FXML private Button pauseInboxBtn;
